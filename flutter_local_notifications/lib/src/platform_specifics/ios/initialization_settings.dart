@@ -11,6 +11,7 @@ class IOSInitializationSettings {
     this.defaultPresentSound = true,
     this.defaultPresentBadge = true,
     this.onDidReceiveLocalNotification,
+    this.onWillPresentNotification,
   });
 
   /// Request permission to display an alert.
@@ -58,4 +59,6 @@ class IOSInitializationSettings {
   ///
   /// This property is only applicable to iOS versions older than 10.
   final DidReceiveLocalNotificationCallback? onDidReceiveLocalNotification;
+
+  final void Function()? onWillPresentNotification;
 }

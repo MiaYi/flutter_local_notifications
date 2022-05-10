@@ -540,6 +540,7 @@ class IOSFlutterLocalNotificationsPlugin
   SelectNotificationCallback? _onSelectNotification;
 
   DidReceiveLocalNotificationCallback? _onDidReceiveLocalNotification;
+  void Function()? _onWillPresentNotification;
 
   /// Initializes the plugin.
   ///
@@ -564,6 +565,8 @@ class IOSFlutterLocalNotificationsPlugin
     _onSelectNotification = onSelectNotification;
     _onDidReceiveLocalNotification =
         initializationSettings.onDidReceiveLocalNotification;
+    _onWillPresentNotification =
+        initializationSettings.onWillPresentNotification;
     _channel.setMethodCallHandler(_handleMethod);
     return await _channel.invokeMethod(
         'initialize', initializationSettings.toMap());
@@ -757,6 +760,9 @@ class IOSFlutterLocalNotificationsPlugin
             call.arguments['title'],
             call.arguments['body'],
             call.arguments['payload']);
+        break;
+      case 'willPresentNotification':
+        _onWillPresentNotification!();
         break;
       default:
         return await Future<void>.error('Method not defined');
