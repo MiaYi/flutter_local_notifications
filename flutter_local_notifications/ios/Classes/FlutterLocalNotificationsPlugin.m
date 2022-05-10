@@ -936,10 +936,6 @@ static FlutterError *getFlutterError(NSError *error) {
   if (![self isAFlutterLocalNotification:notification.userInfo]) {
     return;
   }
-  if (@available(iOS 10.0, *)) {
-    [_channel invokeMethod:DID_RECEIVE_LOCAL_NOTIFICATION arguments:arguments];
-    return;
-  }
 
   NSMutableDictionary *arguments = [[NSMutableDictionary alloc] init];
   arguments[ID] = notification.userInfo[NOTIFICATION_ID];
