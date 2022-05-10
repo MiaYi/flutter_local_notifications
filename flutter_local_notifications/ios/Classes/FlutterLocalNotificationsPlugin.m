@@ -31,6 +31,7 @@ NSString *const CALLBACK_CHANNEL =
     @"dexterous.com/flutter/local_notifications_background";
 NSString *const ON_NOTIFICATION_METHOD = @"onNotification";
 NSString *const DID_RECEIVE_LOCAL_NOTIFICATION = @"didReceiveLocalNotification";
+NSString *const WILL_PRESENT_NOTIFICATION = @"willPresentNotification";
 NSString *const REQUEST_PERMISSIONS_METHOD = @"requestPermissions";
 
 NSString *const DAY = @"day";
@@ -871,6 +872,7 @@ static FlutterError *getFlutterError(NSError *error) {
           isAFlutterLocalNotification:notification.request.content.userInfo]) {
     return;
   }
+  [_channel invokeMethod:WILL_PRESENT_NOTIFICATION arguments:nil];
   UNNotificationPresentationOptions presentationOptions = 0;
   NSNumber *presentAlertValue =
       (NSNumber *)notification.request.content.userInfo[PRESENT_ALERT];
