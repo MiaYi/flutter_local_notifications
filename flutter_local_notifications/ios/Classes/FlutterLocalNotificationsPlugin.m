@@ -933,10 +933,11 @@ static FlutterError *getFlutterError(NSError *error) {
 
 - (void)application:(UIApplication *)application
     didReceiveLocalNotification:(UILocalNotification *)notification {
-  if (@available(iOS 10.0, *)) {
+  if (![self isAFlutterLocalNotification:notification.userInfo]) {
     return;
   }
-  if (![self isAFlutterLocalNotification:notification.userInfo]) {
+  if (@available(iOS 10.0, *)) {
+    [_channel invokeMethod:DID_RECEIVE_LOCAL_NOTIFICATION arguments:arguments];
     return;
   }
 
